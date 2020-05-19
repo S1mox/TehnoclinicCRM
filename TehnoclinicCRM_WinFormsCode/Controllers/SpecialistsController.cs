@@ -10,7 +10,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
         OleDbCommand command = new OleDbCommand();  // Объект для создания запросов на SLQ
         OleDbDataAdapter adapter = new OleDbDataAdapter();      // Объект для работы с таблицей
 
-        DataTable table = new DataTable();  // Сохраняет в буффер (себя) ранее загруженную версию таблицы
+        public DataTable table = new DataTable();  // Сохраняет в буффер (себя) ранее загруженную версию таблицы
 
         public DataTable UpdateTable()  // Загрузка и заполнения буффера таблицы всеми существуещими записями 
         {
@@ -52,6 +52,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
 
             while (reader.Read())
             {
+                specialist.Id = int.Parse(reader["Id"].ToString());
                 specialist.FIO = reader["ФИО"].ToString();
                 specialist.Position = reader["Должность"].ToString();
                 specialist.PhoneNumber = reader["Телефон"].ToString();
@@ -95,6 +96,8 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
         public DataTable Select(string parameter, string value)     // Выделение новой таблицы с конкретным фильтром
         {
             connection.Open();
+
+            value = "%" + value + "%";
 
             switch (parameter)
             {

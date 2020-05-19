@@ -9,7 +9,7 @@
 
         public override string ToString()
         {
-            return $"{Id}; {FIO}; {Passport}; {PhoneNumber};";
+            return $"{FIO}";
         }
     }
 }

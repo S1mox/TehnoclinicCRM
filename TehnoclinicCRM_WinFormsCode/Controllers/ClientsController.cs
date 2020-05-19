@@ -10,13 +10,13 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
         OleDbCommand command = new OleDbCommand();  // Объект для управления запросами SQL
         OleDbDataAdapter adapter = new OleDbDataAdapter();  // Работа с таблицей БД
 
-        DataTable table = new DataTable();  // Буффер таблицы
+        public DataTable table = new DataTable();  // Буффер таблицы
 
         public DataTable UpdateTable()  // Заполнение буффера
         {
             connection.Open();
 
-            adapter = new OleDbDataAdapter("SELECT * FROM Клиенты", connection);
+            adapter = new OleDbDataAdapter("SELECT * FROM Клиенты", connection);        // выборка всех столбцов из БД
             table.Clear();
 
             adapter.Fill(table);
@@ -30,8 +30,13 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
         {
             connection.Open();
 
+            /*
+             * Вставляем в таблицу экземпляр класса Клиент
+             */
             command = new OleDbCommand("INSERT INTO Клиенты (ФИО, Паспортные_данные, Номер_телефона) VALUES (@ФИО, @Паспортные_данные, @Номер_телефона)", connection);
 
+
+            // параметры к запросу
             command.Parameters.AddWithValue("ФИО", client.FIO);
             command.Parameters.AddWithValue("Паспортные_данные", client.Passport);
             command.Parameters.AddWithValue("Номер_телефона", client.PhoneNumber);
@@ -50,8 +55,9 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             OleDbDataReader reader = command.ExecuteReader();
             Client client = new Client();
 
-            while (reader.Read())
+            while (reader.Read())   // Пока не прочитаются все записи из выборки для чтения
             {
+                client.Id = int.Parse(reader["Id"].ToString());
                 client.FIO = reader["ФИО"].ToString();
                 client.Passport = reader["Паспортные_данные"].ToString();
                 client.PhoneNumber = reader["Номер_телефона"].ToString();
@@ -67,7 +73,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
         {
             connection.Open();
 
-            command = new OleDbCommand("DELETE FROM Клиенты WHERE Id = @Id", connection);
+            command = new OleDbCommand("DELETE FROM Клиенты WHERE Id = @Id", connection);       // удаление записи, чей идентификатор равен заявленному в параметрах метода
             command.Parameters.AddWithValue("Id", id);
 
             command.ExecuteNonQuery();
@@ -95,6 +101,8 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
         public DataTable Select(string parameter, string value) // вернуть новую таблицу по заданному фильтру
         {
             connection.Open();
+
+            value = "%" + value + "%";      // означает, что в конструкции LIKE будут отфильтрованны данные к тем, которые содержат в себе некоторое value
 
             switch (parameter)
             {

@@ -49,6 +49,9 @@
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.вГлавноеМенюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочники0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.услугиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.заказыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оформитьЗаказToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетВExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,7 +89,7 @@
             this.SpecialistGrid.ReadOnly = true;
             this.SpecialistGrid.RowHeadersWidth = 51;
             this.SpecialistGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SpecialistGrid.Size = new System.Drawing.Size(645, 359);
+            this.SpecialistGrid.Size = new System.Drawing.Size(645, 363);
             this.SpecialistGrid.TabIndex = 0;
             this.SpecialistGrid.SelectionChanged += new System.EventHandler(this.Get_Click);
             // 
@@ -149,7 +152,7 @@
             this.SearchL.AutoSize = true;
             this.SearchL.Location = new System.Drawing.Point(16, 84);
             this.SearchL.Name = "SearchL";
-            this.SearchL.Size = new System.Drawing.Size(111, 20);
+            this.SearchL.Size = new System.Drawing.Size(85, 15);
             this.SearchL.TabIndex = 10;
             this.SearchL.Text = "Строка ввода";
             // 
@@ -157,7 +160,7 @@
             // 
             this.SearchText.Location = new System.Drawing.Point(161, 81);
             this.SearchText.Name = "SearchText";
-            this.SearchText.Size = new System.Drawing.Size(161, 27);
+            this.SearchText.Size = new System.Drawing.Size(161, 23);
             this.SearchText.TabIndex = 9;
             this.SearchText.TextChanged += new System.EventHandler(this.SearchText_TextChanged);
             // 
@@ -165,12 +168,12 @@
             // 
             this.CriteriesBox.FormattingEnabled = true;
             this.CriteriesBox.Items.AddRange(new object[] {
-            "Специалист",
+            "ФИО",
             "Должность",
             "Телефон"});
             this.CriteriesBox.Location = new System.Drawing.Point(161, 40);
             this.CriteriesBox.Name = "CriteriesBox";
-            this.CriteriesBox.Size = new System.Drawing.Size(161, 27);
+            this.CriteriesBox.Size = new System.Drawing.Size(161, 23);
             this.CriteriesBox.TabIndex = 8;
             // 
             // SearchCriteriaL
@@ -178,7 +181,7 @@
             this.SearchCriteriaL.AutoSize = true;
             this.SearchCriteriaL.Location = new System.Drawing.Point(16, 43);
             this.SearchCriteriaL.Name = "SearchCriteriaL";
-            this.SearchCriteriaL.Size = new System.Drawing.Size(143, 20);
+            this.SearchCriteriaL.Size = new System.Drawing.Size(110, 15);
             this.SearchCriteriaL.TabIndex = 7;
             this.SearchCriteriaL.Text = "Критерий поиска";
             // 
@@ -216,21 +219,21 @@
             // 
             this.PhoneNumberEdit.Location = new System.Drawing.Point(134, 122);
             this.PhoneNumberEdit.Name = "PhoneNumberEdit";
-            this.PhoneNumberEdit.Size = new System.Drawing.Size(190, 27);
+            this.PhoneNumberEdit.Size = new System.Drawing.Size(190, 23);
             this.PhoneNumberEdit.TabIndex = 11;
             // 
             // PositionEdit
             // 
             this.PositionEdit.Location = new System.Drawing.Point(134, 81);
             this.PositionEdit.Name = "PositionEdit";
-            this.PositionEdit.Size = new System.Drawing.Size(190, 27);
+            this.PositionEdit.Size = new System.Drawing.Size(190, 23);
             this.PositionEdit.TabIndex = 10;
             // 
             // SpecialistEdit
             // 
             this.SpecialistEdit.Location = new System.Drawing.Point(134, 40);
             this.SpecialistEdit.Name = "SpecialistEdit";
-            this.SpecialistEdit.Size = new System.Drawing.Size(190, 27);
+            this.SpecialistEdit.Size = new System.Drawing.Size(190, 23);
             this.SpecialistEdit.TabIndex = 8;
             // 
             // PhoneNumberEditL
@@ -238,7 +241,7 @@
             this.PhoneNumberEditL.AutoSize = true;
             this.PhoneNumberEditL.Location = new System.Drawing.Point(26, 125);
             this.PhoneNumberEditL.Name = "PhoneNumberEditL";
-            this.PhoneNumberEditL.Size = new System.Drawing.Size(75, 20);
+            this.PhoneNumberEditL.Size = new System.Drawing.Size(57, 15);
             this.PhoneNumberEditL.TabIndex = 9;
             this.PhoneNumberEditL.Text = "Телефон";
             // 
@@ -247,7 +250,7 @@
             this.PositionEditL.AutoSize = true;
             this.PositionEditL.Location = new System.Drawing.Point(26, 84);
             this.PositionEditL.Name = "PositionEditL";
-            this.PositionEditL.Size = new System.Drawing.Size(96, 20);
+            this.PositionEditL.Size = new System.Drawing.Size(74, 15);
             this.PositionEditL.TabIndex = 7;
             this.PositionEditL.Text = "Должность";
             // 
@@ -256,7 +259,7 @@
             this.SpecialistEditL.AutoSize = true;
             this.SpecialistEditL.Location = new System.Drawing.Point(26, 43);
             this.SpecialistEditL.Name = "SpecialistEditL";
-            this.SpecialistEditL.Size = new System.Drawing.Size(102, 20);
+            this.SpecialistEditL.Size = new System.Drawing.Size(76, 15);
             this.SpecialistEditL.TabIndex = 6;
             this.SpecialistEditL.Text = "Специалист";
             // 
@@ -273,40 +276,66 @@
             this.выходToolStripMenuItem});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Size = new System.Drawing.Size(974, 28);
+            this.MenuBar.Size = new System.Drawing.Size(974, 24);
             this.MenuBar.TabIndex = 2;
             this.MenuBar.Text = "menuStrip1";
             // 
             // вГлавноеМенюToolStripMenuItem
             // 
             this.вГлавноеМенюToolStripMenuItem.Name = "вГлавноеМенюToolStripMenuItem";
-            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(144, 24);
+            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
             this.вГлавноеМенюToolStripMenuItem.Text = "В главное меню";
             this.вГлавноеМенюToolStripMenuItem.Click += new System.EventHandler(this.MenuForm_Click);
             // 
             // справочники0ToolStripMenuItem
             // 
+            this.справочники0ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.клиентыToolStripMenuItem,
+            this.услугиToolStripMenuItem,
+            this.заказыToolStripMenuItem});
             this.справочники0ToolStripMenuItem.Name = "справочники0ToolStripMenuItem";
-            this.справочники0ToolStripMenuItem.Size = new System.Drawing.Size(126, 24);
+            this.справочники0ToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
             this.справочники0ToolStripMenuItem.Text = "Справочники";
-            this.справочники0ToolStripMenuItem.Click += new System.EventHandler(this.Dictionary_Click);
+            // 
+            // клиентыToolStripMenuItem
+            // 
+            this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.клиентыToolStripMenuItem.Text = "Клиенты";
+            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
+            // 
+            // услугиToolStripMenuItem
+            // 
+            this.услугиToolStripMenuItem.Name = "услугиToolStripMenuItem";
+            this.услугиToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.услугиToolStripMenuItem.Text = "Услуги";
+            this.услугиToolStripMenuItem.Click += new System.EventHandler(this.услугиToolStripMenuItem_Click);
+            // 
+            // заказыToolStripMenuItem
+            // 
+            this.заказыToolStripMenuItem.Name = "заказыToolStripMenuItem";
+            this.заказыToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.заказыToolStripMenuItem.Text = "Заказы";
+            this.заказыToolStripMenuItem.Click += new System.EventHandler(this.заказыToolStripMenuItem_Click);
             // 
             // оформитьЗаказToolStripMenuItem
             // 
             this.оформитьЗаказToolStripMenuItem.Name = "оформитьЗаказToolStripMenuItem";
-            this.оформитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(148, 24);
+            this.оформитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
             this.оформитьЗаказToolStripMenuItem.Text = "Оформить заказ";
+            this.оформитьЗаказToolStripMenuItem.Click += new System.EventHandler(this.AddOrder_Click);
             // 
             // отчетВExcelToolStripMenuItem
             // 
             this.отчетВExcelToolStripMenuItem.Name = "отчетВExcelToolStripMenuItem";
-            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(125, 24);
+            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
             this.отчетВExcelToolStripMenuItem.Text = "Отчет в Excel";
+            this.отчетВExcelToolStripMenuItem.Click += new System.EventHandler(this.Create_ExcelReport);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -316,9 +345,9 @@
             this.HeaderPanel.Controls.Add(this.AddBox);
             this.HeaderPanel.Controls.Add(this.SpecialistGrid);
             this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HeaderPanel.Location = new System.Drawing.Point(0, 28);
+            this.HeaderPanel.Location = new System.Drawing.Point(0, 24);
             this.HeaderPanel.Name = "HeaderPanel";
-            this.HeaderPanel.Size = new System.Drawing.Size(974, 359);
+            this.HeaderPanel.Size = new System.Drawing.Size(974, 363);
             this.HeaderPanel.TabIndex = 3;
             // 
             // AddBox
@@ -341,21 +370,21 @@
             // 
             this.PhoneNumber.Location = new System.Drawing.Point(114, 122);
             this.PhoneNumber.Name = "PhoneNumber";
-            this.PhoneNumber.Size = new System.Drawing.Size(190, 27);
+            this.PhoneNumber.Size = new System.Drawing.Size(190, 23);
             this.PhoneNumber.TabIndex = 5;
             // 
             // Position
             // 
             this.Position.Location = new System.Drawing.Point(114, 81);
             this.Position.Name = "Position";
-            this.Position.Size = new System.Drawing.Size(190, 27);
+            this.Position.Size = new System.Drawing.Size(190, 23);
             this.Position.TabIndex = 4;
             // 
             // FIO
             // 
             this.FIO.Location = new System.Drawing.Point(114, 40);
             this.FIO.Name = "FIO";
-            this.FIO.Size = new System.Drawing.Size(190, 27);
+            this.FIO.Size = new System.Drawing.Size(190, 23);
             this.FIO.TabIndex = 2;
             // 
             // Add
@@ -376,7 +405,7 @@
             this.PhoneNumberL.AutoSize = true;
             this.PhoneNumberL.Location = new System.Drawing.Point(6, 125);
             this.PhoneNumberL.Name = "PhoneNumberL";
-            this.PhoneNumberL.Size = new System.Drawing.Size(75, 20);
+            this.PhoneNumberL.Size = new System.Drawing.Size(57, 15);
             this.PhoneNumberL.TabIndex = 2;
             this.PhoneNumberL.Text = "Телефон";
             // 
@@ -385,7 +414,7 @@
             this.PositionL.AutoSize = true;
             this.PositionL.Location = new System.Drawing.Point(6, 84);
             this.PositionL.Name = "PositionL";
-            this.PositionL.Size = new System.Drawing.Size(96, 20);
+            this.PositionL.Size = new System.Drawing.Size(74, 15);
             this.PositionL.TabIndex = 1;
             this.PositionL.Text = "Должность";
             // 
@@ -394,13 +423,13 @@
             this.SpecialistL.AutoSize = true;
             this.SpecialistL.Location = new System.Drawing.Point(6, 43);
             this.SpecialistL.Name = "SpecialistL";
-            this.SpecialistL.Size = new System.Drawing.Size(102, 20);
+            this.SpecialistL.Size = new System.Drawing.Size(76, 15);
             this.SpecialistL.TabIndex = 0;
             this.SpecialistL.Text = "Специалист";
             // 
             // SpecialistsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 639);
             this.Controls.Add(this.HeaderPanel);
@@ -465,5 +494,8 @@
         private System.Windows.Forms.TextBox SearchText;
         private System.Windows.Forms.ComboBox CriteriesBox;
         private System.Windows.Forms.Label SearchCriteriaL;
+        private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem услугиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem заказыToolStripMenuItem;
     }
 }

@@ -1,25 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TehnoclinicCRM_WinFormsCode.Controllers;
-using TehnoclinicCRM_WinFormsCode.Models;
-using System.Data.OleDb;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
 
 namespace TehnoclinicCRM_WinFormsCode
 {
     public partial class ServicesForm : Form
     {
-        OleDbConnection connection = new OleDbConnection(ConstStrings.ConnectionString);        // Объект для подключения к БД
-        OleDbCommand command = new OleDbCommand();  // Объект для управления запросами SQL
-        OleDbDataAdapter adapter = new OleDbDataAdapter();  // Работа с таблицей БД
-
-        DataTable table = new DataTable();  // Буффер таблицы
+        ServiceController controller = new ServiceController();
 
         public ServicesForm()
         {
@@ -33,18 +22,15 @@ namespace TehnoclinicCRM_WinFormsCode
             Close();                                   // Выход из формы
         }
 
+        private void MenuForm_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void UpdateTable()
         {
-            connection.Open();
-
-            adapter = new OleDbDataAdapter("SELECT Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена FROM Услуги, Подразделения WHERE Услуги.Подразделение = Подразделения.Код", connection);
-
-            table.Clear();
-            adapter.Fill(table);
-
-            ServicesGrid.DataSource = table;
-
-            connection.Close();
+            ServicesGrid.DataSource = controller.UpdateTable();
+            ServicesGrid.Columns[0].Visible = false;
         }
 
         private void SearchText_TextChanged(object sender, EventArgs e)
@@ -57,21 +43,21 @@ namespace TehnoclinicCRM_WinFormsCode
                     {
                         case "Подразделение":
                             ServicesGrid.DataSource = null;
-                            ServicesGrid.DataSource = Select("Подразделение", SearchText.Text);
-
+                            ServicesGrid.DataSource = controller.Select("Подразделение", SearchText.Text);
                             break;
 
                         case "Услуга":
+                            ServicesGrid.DataSource = null;
+                            ServicesGrid.DataSource = controller.Select("Услуга", SearchText.Text);
                             break;
 
                         case "Цена":
-
-
+                            ServicesGrid.DataSource = null;
+                            ServicesGrid.DataSource = controller.Select("Цена", SearchText.Text);
                             break;
 
                         default:
                             break;
-
                     }
                 }
                 catch (Exception ex)
@@ -85,41 +71,49 @@ namespace TehnoclinicCRM_WinFormsCode
             }
         }
 
-        public DataTable Select(string parameter, string value)     // Выделение новой таблицы с конкретным фильтром
+        private void Create_ExcelReport(object sender, EventArgs e)
         {
-            connection.Open();
+            SaveFileDialog save = new SaveFileDialog();
+            save.FileName = $"Отчет по услугам за {DateTime.Now.ToShortDateString()}";
+            save.DefaultExt = "xlsx";
+            save.AddExtension = true;
+            save.Filter = "Лист Microsoft Excel (*xlsx) | *.xlsx";
 
-            value += "%";
-
-            switch (parameter)
+            if (save.ShowDialog() == DialogResult.Cancel)
             {
-                case "Подразделение":
-                    command = new OleDbCommand($"SELECT * FROM (SELECT Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена FROM Услуги, Подразделения WHERE Услуги.Подразделение = Подразделения.Код) WHERE Подразделение LIKE value", connection);
-                    command.Parameters.AddWithValue("value", value);
-
-                    break;
-                case "Услуга":
-                    command = new OleDbCommand($"SELECT * FROM (SELECT Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена FROM Услуги, Подразделения WHERE Услуги.Подразделение = Подразделения.Код) WHERE Услуга LIKE value", connection);
-                    command.Parameters.AddWithValue("value", value);
-
-                    break;
-                case "Цена":
-                    command = new OleDbCommand($"SELECT * FROM (SELECT Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена FROM Услуги, Подразделения WHERE Услуги.Подразделение = Подразделения.Код) WHERE Цена LIKE value", connection);
-                    command.Parameters.AddWithValue("value", value);
-
-                    break;
-                default:
-                    break;
+                return;
             }
 
-            OleDbDataAdapter tempAdapter = new OleDbDataAdapter(command);
-            DataTable tempTable = new DataTable();
+            Excel.Application ExcelApp = new Excel.Application();
+            ExcelApp.Visible = false;
 
-            tempAdapter.Fill(tempTable);
+            Workbook workbook = ExcelApp.Workbooks.Add();
 
-            connection.Close();
+            for (int i = 0, n = 1; i < ServicesGrid.ColumnCount; i++, n++)
+            {
+                ExcelApp.Cells[1, n] = ServicesGrid.Columns[i].Name;
+            }
 
-            return tempTable;
+            for (int i = 0; i < ServicesGrid.RowCount; i++)
+            {
+                for (int j = 0; j < ServicesGrid.ColumnCount; j++)
+                {
+                    ExcelApp.Cells[i + 2, j + 1] = (ServicesGrid[j, i].Value.ToString()).ToString();
+                }
+            }
+
+            Worksheet worksheet = (Worksheet)ExcelApp.Worksheets[1];
+            Range range = worksheet.Range[worksheet.Cells[1, 1], worksheet.Cells[ServicesGrid.RowCount + 1, ServicesGrid.ColumnCount]];
+
+            range.Cells.HorizontalAlignment = XlHAlign.xlHAlignLeft;
+            range.Cells.VerticalAlignment = XlVAlign.xlVAlignCenter;
+
+            range.EntireColumn.AutoFit();
+
+            ExcelApp.Application.ActiveWorkbook.SaveAs(save.FileName);
+            ExcelApp.Quit();
+
+            MessageBox.Show("Файл сохранен", "Сохранение");
         }
     }
 }

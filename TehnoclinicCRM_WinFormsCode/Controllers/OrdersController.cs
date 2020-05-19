@@ -10,13 +10,13 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
         OleDbCommand command = new OleDbCommand();  // Объект для создания запросов на SLQ
         OleDbDataAdapter adapter = new OleDbDataAdapter();      // Объект для работы с таблицей
 
-        DataTable table = new DataTable();  // Сохраняет в буффер (себя) ранее загруженную версию таблицы
+        public DataTable table = new DataTable();  // Сохраняет в буффер (себя) ранее загруженную версию таблицы
 
         public DataTable UpdateTable()  // Загрузка и заполнения буффера таблицы всеми существуещими записями 
         {
             connection.Open();
 
-            adapter = new OleDbDataAdapter("SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО, Подразделения.Тип, Услуги.Название_услуги, Услуги.Цена, Специалисты.ФИО, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+            adapter = new OleDbDataAdapter("SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
                 "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение", connection);
             table.Clear();
 
@@ -27,41 +27,25 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             return table;
         }
 
-        public void Add(Specialist specialist)  // Добавление специалиста в таблицу
+        public void Add(Order order)  // Добавление специалиста в таблицу
         {
             connection.Open();
 
-            command = new OleDbCommand("INSERT INTO Специалисты (ФИО, Должность, Телефон) VALUES (@ФИО, @Должность, @Телефон)", connection);
+            command = new OleDbCommand("INSERT INTO Заказы (Номер_заказа, Дата_получения, Клиент, Услуга, Специалист, Дата_начала_выполнения, Дата_окончания_выполнения, Итоговая_сумма, Статус_выполнения) VALUES (Номер_заказа, Дата_получения, Клиент, Услуга, Специалист, Дата_начала_выполнения, Дата_окончания_выполнения, Итоговая_сумма, Статус_выполнения)", connection);
 
-            command.Parameters.AddWithValue("ФИО", specialist.FIO);
-            command.Parameters.AddWithValue("Должность", specialist.Position);
-            command.Parameters.AddWithValue("Телефон", specialist.PhoneNumber);
+            command.Parameters.AddWithValue("Номер_заказа", order.NumberOfOrder);
+            command.Parameters.AddWithValue("Дата_получения", order.DateOfReceiving);
+            command.Parameters.AddWithValue("Клиент", order.Client.Id);
+            command.Parameters.AddWithValue("Услуга", order.Service.Id);
+            command.Parameters.AddWithValue("Специалист", order.Specialist.Id);
+            command.Parameters.AddWithValue("Дата_начала_выполнения", order.DateOfBegin);
+            command.Parameters.AddWithValue("Дата_окончания_выполнения", order.DateOfEnd);
+            command.Parameters.AddWithValue("Итоговая_сумма", order.Sum);
+            command.Parameters.AddWithValue("Статус_выполнения", order.Status);
+
             command.ExecuteNonQuery();
 
             connection.Close();
-        }
-
-        public Specialist Get(int id)   // Получить специалиста из базы по его идентификатору
-        {
-            connection.Open();
-
-            command = new OleDbCommand("SELECT * FROM Специалисты WHERE Id = @Id", connection);
-            command.Parameters.AddWithValue("Id", id);
-
-            OleDbDataReader reader = command.ExecuteReader();
-            Specialist specialist = new Specialist();
-
-            while (reader.Read())
-            {
-                specialist.FIO = reader["ФИО"].ToString();
-                specialist.Position = reader["Должность"].ToString();
-                specialist.PhoneNumber = reader["Телефон"].ToString();
-            }
-
-            reader.Close();
-            connection.Close();
-
-            return specialist;
         }
 
         public void Delete(int id)      // Удаление специалиста
@@ -76,44 +60,92 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             connection.Close();
         }
 
-        public void Update(Specialist specialist)   // Обновление записи о специалисте
-        {
-            connection.Open();
-
-            command = new OleDbCommand($"UPDATE Специалисты SET ФИО = @ФИО, Должность = @Должность, Телефон = @Телефон WHERE Id = @Id", connection);
-
-            command.Parameters.AddWithValue("ФИО", specialist.FIO);
-            command.Parameters.AddWithValue("Должность", specialist.Position);
-            command.Parameters.AddWithValue("Телефон", specialist.PhoneNumber);
-            command.Parameters.AddWithValue("Id", specialist.Id);
-
-
-            command.ExecuteNonQuery();
-
-            connection.Close();
-        }
-
         public DataTable Select(string parameter, string value)     // Выделение новой таблицы с конкретным фильтром
         {
             connection.Open();
 
+            value = "%" + value + "%";
+
             switch (parameter)
             {
-                case "ФИО":
-                    command = new OleDbCommand($"SELECT * FROM Специалисты WHERE ФИО LIKE value", connection);
+                case "Номер_заказа":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Номер_заказа LIKE value", connection);
                     command.Parameters.AddWithValue("value", value);
-
                     break;
-                case "Должность":
-                    command = new OleDbCommand($"SELECT * FROM Специалисты WHERE Должность LIKE value", connection);
+
+                case "Дата_получения":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Дата_получения LIKE value", connection);
                     command.Parameters.AddWithValue("value", value);
-
                     break;
-                case "Телефон":
-                    command = new OleDbCommand($"SELECT * FROM Специалисты WHERE Телефон LIKE value", connection);
+
+                case "Клиент":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Клиент LIKE value", connection);
                     command.Parameters.AddWithValue("value", value);
-
                     break;
+
+                case "Подразделение":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Подразделение LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
+
+                case "Услуга":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Услуга LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
+                case "Предварительная_цена":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Предварительная_цена LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
+                case "Специалист":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Специалист LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
+                case "Дата_начала_выполнения":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Дата_начала_выполнения LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
+                case "Дата_окончания_выполнения":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Дата_окончания_выполнения LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
+                case "Итоговая_сумма":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Итоговая_сумма LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
+                case "Статус":
+                    command = new OleDbCommand($"SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " +
+                "WHERE Статус LIKE value", connection);
+                    command.Parameters.AddWithValue("value", value);
+                    break;
+
                 default:
                     break;
             }

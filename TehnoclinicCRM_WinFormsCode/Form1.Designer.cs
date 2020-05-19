@@ -70,7 +70,7 @@
             this.MenuPanel.Location = new System.Drawing.Point(0, 0);
             this.MenuPanel.Margin = new System.Windows.Forms.Padding(0);
             this.MenuPanel.Name = "MenuPanel";
-            this.MenuPanel.Size = new System.Drawing.Size(342, 641);
+            this.MenuPanel.Size = new System.Drawing.Size(342, 530);
             this.MenuPanel.TabIndex = 0;
             // 
             // Services
@@ -171,11 +171,11 @@
             this.AdressLabel.Image = ((System.Drawing.Image)(resources.GetObject("AdressLabel.Image")));
             this.AdressLabel.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.AdressLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.AdressLabel.Location = new System.Drawing.Point(15, 460);
+            this.AdressLabel.Location = new System.Drawing.Point(15, 393);
             this.AdressLabel.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.AdressLabel.Name = "AdressLabel";
             this.AdressLabel.Padding = new System.Windows.Forms.Padding(12, 11, 12, 11);
-            this.AdressLabel.Size = new System.Drawing.Size(313, 162);
+            this.AdressLabel.Size = new System.Drawing.Size(247, 127);
             this.AdressLabel.TabIndex = 2;
             this.AdressLabel.Text = "         \r\n\r\n\r\nг. Гомель, ул. Интернациональная 5, \r\nЧСУП «ТехноКлиника»\r\n\r\n© 201" +
     "5 «ТехноКлиника»";
@@ -191,7 +191,7 @@
             this.InfoPanel.Location = new System.Drawing.Point(342, 0);
             this.InfoPanel.Margin = new System.Windows.Forms.Padding(0);
             this.InfoPanel.Name = "InfoPanel";
-            this.InfoPanel.Size = new System.Drawing.Size(609, 641);
+            this.InfoPanel.Size = new System.Drawing.Size(550, 530);
             this.InfoPanel.TabIndex = 1;
             // 
             // LeftInfoPanel
@@ -204,7 +204,7 @@
             this.LeftInfoPanel.Location = new System.Drawing.Point(0, 122);
             this.LeftInfoPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LeftInfoPanel.Name = "LeftInfoPanel";
-            this.LeftInfoPanel.Size = new System.Drawing.Size(290, 519);
+            this.LeftInfoPanel.Size = new System.Drawing.Size(269, 408);
             this.LeftInfoPanel.TabIndex = 3;
             // 
             // ContactsLabel
@@ -213,7 +213,7 @@
             this.ContactsLabel.Font = new System.Drawing.Font("Cambria", 9.75F);
             this.ContactsLabel.ForeColor = System.Drawing.Color.White;
             this.ContactsLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.ContactsLabel.Location = new System.Drawing.Point(16, 331);
+            this.ContactsLabel.Location = new System.Drawing.Point(20, 203);
             this.ContactsLabel.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.ContactsLabel.Name = "ContactsLabel";
             this.ContactsLabel.Padding = new System.Windows.Forms.Padding(12, 11, 12, 11);
@@ -232,7 +232,7 @@
             this.GraphicsLabel.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.GraphicsLabel.Name = "GraphicsLabel";
             this.GraphicsLabel.Padding = new System.Windows.Forms.Padding(12, 11, 12, 11);
-            this.GraphicsLabel.Size = new System.Drawing.Size(239, 241);
+            this.GraphicsLabel.Size = new System.Drawing.Size(239, 168);
             this.GraphicsLabel.TabIndex = 1;
             this.GraphicsLabel.Text = "График работы\r\nпн-пт: с 10:00 до 19:00\r\n\r\nсб: с 11:00 до 17:00\r\n\r\nвс: выходной";
             // 
@@ -244,10 +244,10 @@
             this.RightInfoPanel.Controls.Add(this.Exit);
             this.RightInfoPanel.Controls.Add(this.Help);
             this.RightInfoPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.RightInfoPanel.Location = new System.Drawing.Point(290, 122);
+            this.RightInfoPanel.Location = new System.Drawing.Point(269, 122);
             this.RightInfoPanel.Margin = new System.Windows.Forms.Padding(19, 17, 19, 17);
             this.RightInfoPanel.Name = "RightInfoPanel";
-            this.RightInfoPanel.Size = new System.Drawing.Size(319, 519);
+            this.RightInfoPanel.Size = new System.Drawing.Size(281, 408);
             this.RightInfoPanel.TabIndex = 2;
             // 
             // label1
@@ -256,11 +256,11 @@
             this.label1.Font = new System.Drawing.Font("Cambria", 7F);
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(28, 11);
+            this.label1.Location = new System.Drawing.Point(6, 11);
             this.label1.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(12, 11, 12, 11);
-            this.label1.Size = new System.Drawing.Size(259, 241);
+            this.label1.Size = new System.Drawing.Size(259, 168);
             this.label1.TabIndex = 3;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -272,7 +272,7 @@
             this.VisitSite.Font = new System.Drawing.Font("Cambria", 9.75F);
             this.VisitSite.ForeColor = System.Drawing.Color.White;
             this.VisitSite.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.VisitSite.Location = new System.Drawing.Point(29, 389);
+            this.VisitSite.Location = new System.Drawing.Point(8, 262);
             this.VisitSite.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.VisitSite.Name = "VisitSite";
             this.VisitSite.Size = new System.Drawing.Size(259, 46);
@@ -289,7 +289,7 @@
             this.Exit.Font = new System.Drawing.Font("Cambria", 9.75F);
             this.Exit.ForeColor = System.Drawing.Color.White;
             this.Exit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Exit.Location = new System.Drawing.Point(29, 442);
+            this.Exit.Location = new System.Drawing.Point(8, 315);
             this.Exit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(259, 46);
@@ -306,7 +306,7 @@
             this.Help.Font = new System.Drawing.Font("Cambria", 9.75F);
             this.Help.ForeColor = System.Drawing.Color.White;
             this.Help.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Help.Location = new System.Drawing.Point(29, 331);
+            this.Help.Location = new System.Drawing.Point(8, 204);
             this.Help.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Help.Name = "Help";
             this.Help.Size = new System.Drawing.Size(259, 52);
@@ -324,7 +324,7 @@
             this.HeaderPicPanel.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.HeaderPicPanel.Name = "HeaderPicPanel";
             this.HeaderPicPanel.Padding = new System.Windows.Forms.Padding(0, 22, 0, 11);
-            this.HeaderPicPanel.Size = new System.Drawing.Size(609, 122);
+            this.HeaderPicPanel.Size = new System.Drawing.Size(550, 122);
             this.HeaderPicPanel.TabIndex = 1;
             // 
             // LogoPic
@@ -333,7 +333,7 @@
             this.LogoPic.Dock = System.Windows.Forms.DockStyle.Right;
             this.LogoPic.Enabled = false;
             this.LogoPic.Image = ((System.Drawing.Image)(resources.GetObject("LogoPic.Image")));
-            this.LogoPic.Location = new System.Drawing.Point(147, 22);
+            this.LogoPic.Location = new System.Drawing.Point(88, 22);
             this.LogoPic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LogoPic.Name = "LogoPic";
             this.LogoPic.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
@@ -343,9 +343,9 @@
             // 
             // MenuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(951, 641);
+            this.ClientSize = new System.Drawing.Size(892, 530);
             this.Controls.Add(this.InfoPanel);
             this.Controls.Add(this.MenuPanel);
             this.Font = new System.Drawing.Font("Courier New", 9.75F);

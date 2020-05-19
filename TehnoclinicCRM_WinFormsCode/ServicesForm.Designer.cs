@@ -36,19 +36,19 @@
             this.WorkPlace = new System.Windows.Forms.Panel();
             this.ServicesGrid = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LogoPic = new System.Windows.Forms.PictureBox();
             this.SearchBox = new System.Windows.Forms.GroupBox();
             this.Reset = new System.Windows.Forms.Button();
             this.SearchL = new System.Windows.Forms.Label();
             this.SearchText = new System.Windows.Forms.TextBox();
             this.CriteriesBox = new System.Windows.Forms.ComboBox();
             this.SearchCriteriaL = new System.Windows.Forms.Label();
-            this.LogoPic = new System.Windows.Forms.PictureBox();
             this.MenuBar.SuspendLayout();
             this.WorkPlace.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServicesGrid)).BeginInit();
             this.panel1.SuspendLayout();
-            this.SearchBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPic)).BeginInit();
+            this.SearchBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -63,26 +63,28 @@
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
             this.MenuBar.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.MenuBar.Size = new System.Drawing.Size(820, 30);
+            this.MenuBar.Size = new System.Drawing.Size(820, 24);
             this.MenuBar.TabIndex = 4;
             this.MenuBar.Text = "menuStrip1";
             // 
             // вГлавноеМенюToolStripMenuItem
             // 
             this.вГлавноеМенюToolStripMenuItem.Name = "вГлавноеМенюToolStripMenuItem";
-            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
             this.вГлавноеМенюToolStripMenuItem.Text = "В главное меню";
+            this.вГлавноеМенюToolStripMenuItem.Click += new System.EventHandler(this.MenuForm_Click);
             // 
             // отчетВExcelToolStripMenuItem
             // 
             this.отчетВExcelToolStripMenuItem.Name = "отчетВExcelToolStripMenuItem";
-            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
             this.отчетВExcelToolStripMenuItem.Text = "Отчет в Excel";
+            this.отчетВExcelToolStripMenuItem.Click += new System.EventHandler(this.Create_ExcelReport);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(72, 26);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -91,10 +93,10 @@
             this.WorkPlace.Controls.Add(this.ServicesGrid);
             this.WorkPlace.Controls.Add(this.panel1);
             this.WorkPlace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WorkPlace.Location = new System.Drawing.Point(0, 30);
+            this.WorkPlace.Location = new System.Drawing.Point(0, 24);
             this.WorkPlace.Margin = new System.Windows.Forms.Padding(4);
             this.WorkPlace.Name = "WorkPlace";
-            this.WorkPlace.Size = new System.Drawing.Size(820, 487);
+            this.WorkPlace.Size = new System.Drawing.Size(820, 493);
             this.WorkPlace.TabIndex = 5;
             // 
             // ServicesGrid
@@ -113,7 +115,7 @@
             this.ServicesGrid.ReadOnly = true;
             this.ServicesGrid.RowHeadersWidth = 51;
             this.ServicesGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ServicesGrid.Size = new System.Drawing.Size(820, 301);
+            this.ServicesGrid.Size = new System.Drawing.Size(820, 307);
             this.ServicesGrid.TabIndex = 6;
             // 
             // panel1
@@ -122,11 +124,26 @@
             this.panel1.Controls.Add(this.LogoPic);
             this.panel1.Controls.Add(this.SearchBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 301);
+            this.panel1.Location = new System.Drawing.Point(0, 307);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(820, 186);
             this.panel1.TabIndex = 0;
+            // 
+            // LogoPic
+            // 
+            this.LogoPic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(30)))), ((int)(((byte)(29)))));
+            this.LogoPic.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LogoPic.Enabled = false;
+            this.LogoPic.Image = ((System.Drawing.Image)(resources.GetObject("LogoPic.Image")));
+            this.LogoPic.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.LogoPic.Location = new System.Drawing.Point(406, 0);
+            this.LogoPic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.LogoPic.Name = "LogoPic";
+            this.LogoPic.Padding = new System.Windows.Forms.Padding(85, 50, 0, 0);
+            this.LogoPic.Size = new System.Drawing.Size(414, 186);
+            this.LogoPic.TabIndex = 3;
+            this.LogoPic.TabStop = false;
             // 
             // SearchBox
             // 
@@ -161,7 +178,7 @@
             this.SearchL.AutoSize = true;
             this.SearchL.Location = new System.Drawing.Point(16, 74);
             this.SearchL.Name = "SearchL";
-            this.SearchL.Size = new System.Drawing.Size(130, 23);
+            this.SearchL.Size = new System.Drawing.Size(107, 19);
             this.SearchL.TabIndex = 10;
             this.SearchL.Text = "Строка ввода";
             // 
@@ -169,7 +186,7 @@
             // 
             this.SearchText.Location = new System.Drawing.Point(202, 71);
             this.SearchText.Name = "SearchText";
-            this.SearchText.Size = new System.Drawing.Size(161, 31);
+            this.SearchText.Size = new System.Drawing.Size(161, 26);
             this.SearchText.TabIndex = 9;
             this.SearchText.TextChanged += new System.EventHandler(this.SearchText_TextChanged);
             // 
@@ -182,7 +199,7 @@
             "Цена"});
             this.CriteriesBox.Location = new System.Drawing.Point(202, 27);
             this.CriteriesBox.Name = "CriteriesBox";
-            this.CriteriesBox.Size = new System.Drawing.Size(161, 31);
+            this.CriteriesBox.Size = new System.Drawing.Size(161, 27);
             this.CriteriesBox.TabIndex = 8;
             // 
             // SearchCriteriaL
@@ -190,28 +207,13 @@
             this.SearchCriteriaL.AutoSize = true;
             this.SearchCriteriaL.Location = new System.Drawing.Point(16, 30);
             this.SearchCriteriaL.Name = "SearchCriteriaL";
-            this.SearchCriteriaL.Size = new System.Drawing.Size(169, 23);
+            this.SearchCriteriaL.Size = new System.Drawing.Size(135, 19);
             this.SearchCriteriaL.TabIndex = 7;
             this.SearchCriteriaL.Text = "Критерий поиска";
             // 
-            // LogoPic
-            // 
-            this.LogoPic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(30)))), ((int)(((byte)(29)))));
-            this.LogoPic.Dock = System.Windows.Forms.DockStyle.Right;
-            this.LogoPic.Enabled = false;
-            this.LogoPic.Image = ((System.Drawing.Image)(resources.GetObject("LogoPic.Image")));
-            this.LogoPic.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.LogoPic.Location = new System.Drawing.Point(406, 0);
-            this.LogoPic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.LogoPic.Name = "LogoPic";
-            this.LogoPic.Padding = new System.Windows.Forms.Padding(85, 50, 0, 0);
-            this.LogoPic.Size = new System.Drawing.Size(414, 186);
-            this.LogoPic.TabIndex = 3;
-            this.LogoPic.TabStop = false;
-            // 
             // ServicesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Snow;
             this.ClientSize = new System.Drawing.Size(820, 517);
@@ -228,9 +230,9 @@
             this.WorkPlace.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ServicesGrid)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPic)).EndInit();
             this.SearchBox.ResumeLayout(false);
             this.SearchBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Windows.Forms;
 using TehnoclinicCRM_WinFormsCode.Controllers;
 using TehnoclinicCRM_WinFormsCode.Models;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace TehnoclinicCRM_WinFormsCode
 {
@@ -77,14 +79,14 @@ namespace TehnoclinicCRM_WinFormsCode
         }
 
         private void MenuForm_Click(object sender, EventArgs e)
-        {            
+        {
 
         }
 
         private void Reset_Click(object sender, EventArgs e)        // Сброс поиска
         {
             CriteriesBox.SelectedIndex = 0;
-            SearchText.Text = "";           
+            SearchText.Text = "";
         }
 
         private void SearchText_TextChanged(object sender, EventArgs e)
@@ -109,9 +111,71 @@ namespace TehnoclinicCRM_WinFormsCode
             }
         }
 
-        public void Dictionary_Click(object senderm, EventArgs e)
+        public void AddOrder_Click(object sender, EventArgs e)
         {
-            new DirectoryForm().Show();
+            new AddOrderForm().Show();
+        }
+
+
+
+        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ClientsForm().Show();
+        }
+
+        private void услугиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ServicesForm().Show();
+        }
+
+        private void заказыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new OrdersForms().Show();
+        }
+
+        private void Create_ExcelReport(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.FileName = $"Отчет по специалистам за {DateTime.Now.ToShortDateString()}";
+            save.DefaultExt = "xlsx";
+            save.AddExtension = true;
+            save.Filter = "Лист Microsoft Excel (*xlsx) | *.xlsx";
+
+            if (save.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            Excel.Application ExcelApp = new Excel.Application();
+            ExcelApp.Visible = false;
+
+            Workbook workbook =  ExcelApp.Workbooks.Add();
+
+            for (int i = 0, n = 1; i < SpecialistGrid.ColumnCount; i++, n++)
+            {
+                ExcelApp.Cells[1, n] = SpecialistGrid.Columns[i].Name;
+            }
+
+            for (int i = 0; i < SpecialistGrid.RowCount; i++)
+            {
+                for (int j = 0; j < SpecialistGrid.ColumnCount; j++)
+                {
+                    ExcelApp.Cells[i+2, j + 1] = (SpecialistGrid[j, i].Value.ToString()).ToString();
+                }
+            }
+
+            Worksheet worksheet = (Worksheet)ExcelApp.Worksheets[1];
+            Range range = worksheet.Range[worksheet.Cells[1, 1], worksheet.Cells[SpecialistGrid.RowCount + 1, SpecialistGrid.ColumnCount]];
+
+            range.Cells.HorizontalAlignment = XlHAlign.xlHAlignLeft;
+            range.Cells.VerticalAlignment = XlVAlign.xlVAlignCenter;
+
+            range.EntireColumn.AutoFit();
+
+            ExcelApp.Application.ActiveWorkbook.SaveAs(save.FileName);
+            ExcelApp.Quit();
+
+            MessageBox.Show("Файл сохранен", "Сохранение");
         }
     }
 }

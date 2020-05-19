@@ -32,6 +32,9 @@
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.вГлавноеМенюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочники0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.специалистыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.услугиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.заказыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оформитьЗаказToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетВExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,39 +84,65 @@
             this.выходToolStripMenuItem});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Size = new System.Drawing.Size(1066, 28);
+            this.MenuBar.Size = new System.Drawing.Size(1066, 24);
             this.MenuBar.TabIndex = 3;
             this.MenuBar.Text = "menuStrip1";
             // 
             // вГлавноеМенюToolStripMenuItem
             // 
             this.вГлавноеМенюToolStripMenuItem.Name = "вГлавноеМенюToolStripMenuItem";
-            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(144, 24);
+            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
             this.вГлавноеМенюToolStripMenuItem.Text = "В главное меню";
+            this.вГлавноеМенюToolStripMenuItem.Click += new System.EventHandler(this.MenuForm_Click);
             // 
             // справочники0ToolStripMenuItem
             // 
+            this.справочники0ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.специалистыToolStripMenuItem,
+            this.услугиToolStripMenuItem,
+            this.заказыToolStripMenuItem});
             this.справочники0ToolStripMenuItem.Name = "справочники0ToolStripMenuItem";
-            this.справочники0ToolStripMenuItem.Size = new System.Drawing.Size(126, 24);
+            this.справочники0ToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
             this.справочники0ToolStripMenuItem.Text = "Справочники";
-            this.справочники0ToolStripMenuItem.Click += new System.EventHandler(this.Dictionary_Click);
+            // 
+            // специалистыToolStripMenuItem
+            // 
+            this.специалистыToolStripMenuItem.Name = "специалистыToolStripMenuItem";
+            this.специалистыToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.специалистыToolStripMenuItem.Text = "Специалисты";
+            this.специалистыToolStripMenuItem.Click += new System.EventHandler(this.специалистыToolStripMenuItem_Click);
+            // 
+            // услугиToolStripMenuItem
+            // 
+            this.услугиToolStripMenuItem.Name = "услугиToolStripMenuItem";
+            this.услугиToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.услугиToolStripMenuItem.Text = "Услуги";
+            // 
+            // заказыToolStripMenuItem
+            // 
+            this.заказыToolStripMenuItem.Name = "заказыToolStripMenuItem";
+            this.заказыToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.заказыToolStripMenuItem.Text = "Заказы";
+            this.заказыToolStripMenuItem.Click += new System.EventHandler(this.заказыToolStripMenuItem_Click);
             // 
             // оформитьЗаказToolStripMenuItem
             // 
             this.оформитьЗаказToolStripMenuItem.Name = "оформитьЗаказToolStripMenuItem";
-            this.оформитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(148, 24);
+            this.оформитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
             this.оформитьЗаказToolStripMenuItem.Text = "Оформить заказ";
+            this.оформитьЗаказToolStripMenuItem.Click += new System.EventHandler(this.AddOrder_Click);
             // 
             // отчетВExcelToolStripMenuItem
             // 
             this.отчетВExcelToolStripMenuItem.Name = "отчетВExcelToolStripMenuItem";
-            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(125, 24);
+            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
             this.отчетВExcelToolStripMenuItem.Text = "Отчет в Excel";
+            this.отчетВExcelToolStripMenuItem.Click += new System.EventHandler(this.Create_ExcelReport);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -150,9 +179,9 @@
             this.Reset.BackColor = System.Drawing.Color.Snow;
             this.Reset.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Reset.ForeColor = System.Drawing.Color.Black;
-            this.Reset.Location = new System.Drawing.Point(45, 109);
+            this.Reset.Location = new System.Drawing.Point(45, 102);
             this.Reset.Name = "Reset";
-            this.Reset.Size = new System.Drawing.Size(242, 47);
+            this.Reset.Size = new System.Drawing.Size(242, 54);
             this.Reset.TabIndex = 14;
             this.Reset.Text = "Сброс";
             this.Reset.UseVisualStyleBackColor = false;
@@ -163,7 +192,7 @@
             this.SearchL.AutoSize = true;
             this.SearchL.Location = new System.Drawing.Point(6, 69);
             this.SearchL.Name = "SearchL";
-            this.SearchL.Size = new System.Drawing.Size(111, 20);
+            this.SearchL.Size = new System.Drawing.Size(85, 15);
             this.SearchL.TabIndex = 10;
             this.SearchL.Text = "Строка ввода";
             // 
@@ -171,7 +200,7 @@
             // 
             this.SearchText.Location = new System.Drawing.Point(186, 66);
             this.SearchText.Name = "SearchText";
-            this.SearchText.Size = new System.Drawing.Size(130, 27);
+            this.SearchText.Size = new System.Drawing.Size(130, 23);
             this.SearchText.TabIndex = 9;
             this.SearchText.TextChanged += new System.EventHandler(this.SearchText_TextChanged);
             // 
@@ -184,7 +213,7 @@
             "Номер телефона"});
             this.CriteriesBox.Location = new System.Drawing.Point(186, 28);
             this.CriteriesBox.Name = "CriteriesBox";
-            this.CriteriesBox.Size = new System.Drawing.Size(130, 27);
+            this.CriteriesBox.Size = new System.Drawing.Size(130, 23);
             this.CriteriesBox.TabIndex = 8;
             // 
             // SearchCriteriaL
@@ -192,7 +221,7 @@
             this.SearchCriteriaL.AutoSize = true;
             this.SearchCriteriaL.Location = new System.Drawing.Point(5, 31);
             this.SearchCriteriaL.Name = "SearchCriteriaL";
-            this.SearchCriteriaL.Size = new System.Drawing.Size(143, 20);
+            this.SearchCriteriaL.Size = new System.Drawing.Size(110, 15);
             this.SearchCriteriaL.TabIndex = 7;
             this.SearchCriteriaL.Text = "Критерий поиска";
             // 
@@ -231,9 +260,9 @@
             this.Save.BackColor = System.Drawing.Color.Snow;
             this.Save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Save.ForeColor = System.Drawing.Color.Black;
-            this.Save.Location = new System.Drawing.Point(19, 175);
+            this.Save.Location = new System.Drawing.Point(20, 171);
             this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(294, 47);
+            this.Save.Size = new System.Drawing.Size(294, 54);
             this.Save.TabIndex = 12;
             this.Save.Text = "Сохранить изменения";
             this.Save.UseVisualStyleBackColor = false;
@@ -243,21 +272,21 @@
             // 
             this.PhoneNumberEdit.Location = new System.Drawing.Point(124, 122);
             this.PhoneNumberEdit.Name = "PhoneNumberEdit";
-            this.PhoneNumberEdit.Size = new System.Drawing.Size(190, 27);
+            this.PhoneNumberEdit.Size = new System.Drawing.Size(190, 23);
             this.PhoneNumberEdit.TabIndex = 11;
             // 
             // PassportEdit
             // 
             this.PassportEdit.Location = new System.Drawing.Point(124, 81);
             this.PassportEdit.Name = "PassportEdit";
-            this.PassportEdit.Size = new System.Drawing.Size(190, 27);
+            this.PassportEdit.Size = new System.Drawing.Size(190, 23);
             this.PassportEdit.TabIndex = 10;
             // 
             // ClientEdit
             // 
             this.ClientEdit.Location = new System.Drawing.Point(124, 40);
             this.ClientEdit.Name = "ClientEdit";
-            this.ClientEdit.Size = new System.Drawing.Size(190, 27);
+            this.ClientEdit.Size = new System.Drawing.Size(190, 23);
             this.ClientEdit.TabIndex = 8;
             // 
             // PhoneNumberEditL
@@ -265,7 +294,7 @@
             this.PhoneNumberEditL.AutoSize = true;
             this.PhoneNumberEditL.Location = new System.Drawing.Point(16, 125);
             this.PhoneNumberEditL.Name = "PhoneNumberEditL";
-            this.PhoneNumberEditL.Size = new System.Drawing.Size(75, 20);
+            this.PhoneNumberEditL.Size = new System.Drawing.Size(57, 15);
             this.PhoneNumberEditL.TabIndex = 9;
             this.PhoneNumberEditL.Text = "Телефон";
             // 
@@ -274,7 +303,7 @@
             this.PassportEditL.AutoSize = true;
             this.PassportEditL.Location = new System.Drawing.Point(16, 84);
             this.PassportEditL.Name = "PassportEditL";
-            this.PassportEditL.Size = new System.Drawing.Size(73, 20);
+            this.PassportEditL.Size = new System.Drawing.Size(56, 15);
             this.PassportEditL.TabIndex = 7;
             this.PassportEditL.Text = "Паспорт";
             // 
@@ -283,7 +312,7 @@
             this.ClientEditL.AutoSize = true;
             this.ClientEditL.Location = new System.Drawing.Point(16, 43);
             this.ClientEditL.Name = "ClientEditL";
-            this.ClientEditL.Size = new System.Drawing.Size(67, 20);
+            this.ClientEditL.Size = new System.Drawing.Size(51, 15);
             this.ClientEditL.TabIndex = 6;
             this.ClientEditL.Text = "Клиент";
             // 
@@ -308,21 +337,21 @@
             // 
             this.PhoneNumber.Location = new System.Drawing.Point(149, 122);
             this.PhoneNumber.Name = "PhoneNumber";
-            this.PhoneNumber.Size = new System.Drawing.Size(190, 27);
+            this.PhoneNumber.Size = new System.Drawing.Size(190, 23);
             this.PhoneNumber.TabIndex = 5;
             // 
             // Passport
             // 
             this.Passport.Location = new System.Drawing.Point(149, 81);
             this.Passport.Name = "Passport";
-            this.Passport.Size = new System.Drawing.Size(190, 27);
+            this.Passport.Size = new System.Drawing.Size(190, 23);
             this.Passport.TabIndex = 4;
             // 
             // FIO
             // 
             this.FIO.Location = new System.Drawing.Point(149, 40);
             this.FIO.Name = "FIO";
-            this.FIO.Size = new System.Drawing.Size(190, 27);
+            this.FIO.Size = new System.Drawing.Size(190, 23);
             this.FIO.TabIndex = 2;
             // 
             // Add
@@ -343,7 +372,7 @@
             this.PhoneNumberL.AutoSize = true;
             this.PhoneNumberL.Location = new System.Drawing.Point(6, 125);
             this.PhoneNumberL.Name = "PhoneNumberL";
-            this.PhoneNumberL.Size = new System.Drawing.Size(136, 20);
+            this.PhoneNumberL.Size = new System.Drawing.Size(104, 15);
             this.PhoneNumberL.TabIndex = 2;
             this.PhoneNumberL.Text = "Номер телефона";
             // 
@@ -352,7 +381,7 @@
             this.PassportL.AutoSize = true;
             this.PassportL.Location = new System.Drawing.Point(6, 84);
             this.PassportL.Name = "PassportL";
-            this.PassportL.Size = new System.Drawing.Size(73, 20);
+            this.PassportL.Size = new System.Drawing.Size(56, 15);
             this.PassportL.TabIndex = 1;
             this.PassportL.Text = "Паспорт";
             // 
@@ -361,7 +390,7 @@
             this.ClientL.AutoSize = true;
             this.ClientL.Location = new System.Drawing.Point(6, 43);
             this.ClientL.Name = "ClientL";
-            this.ClientL.Size = new System.Drawing.Size(67, 20);
+            this.ClientL.Size = new System.Drawing.Size(51, 15);
             this.ClientL.TabIndex = 0;
             this.ClientL.Text = "Клиент";
             // 
@@ -374,20 +403,20 @@
             this.ClientsGrid.BackgroundColor = System.Drawing.Color.Snow;
             this.ClientsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ClientsGrid.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ClientsGrid.Location = new System.Drawing.Point(0, 28);
+            this.ClientsGrid.Location = new System.Drawing.Point(0, 24);
             this.ClientsGrid.Margin = new System.Windows.Forms.Padding(4);
             this.ClientsGrid.MultiSelect = false;
             this.ClientsGrid.Name = "ClientsGrid";
             this.ClientsGrid.ReadOnly = true;
             this.ClientsGrid.RowHeadersWidth = 51;
             this.ClientsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ClientsGrid.Size = new System.Drawing.Size(1066, 398);
+            this.ClientsGrid.Size = new System.Drawing.Size(1066, 402);
             this.ClientsGrid.TabIndex = 5;
             this.ClientsGrid.SelectionChanged += new System.EventHandler(this.Get_Click);
             // 
             // ClientsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1066, 687);
             this.Controls.Add(this.ClientsGrid);
@@ -446,5 +475,8 @@
         private System.Windows.Forms.TextBox SearchText;
         private System.Windows.Forms.ComboBox CriteriesBox;
         private System.Windows.Forms.Label SearchCriteriaL;
+        private System.Windows.Forms.ToolStripMenuItem специалистыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem услугиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem заказыToolStripMenuItem;
     }
 }
