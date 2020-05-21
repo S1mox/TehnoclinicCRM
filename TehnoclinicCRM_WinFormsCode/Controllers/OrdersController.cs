@@ -1,5 +1,7 @@
-﻿using System.Data.OleDb;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using TehnoclinicCRM_WinFormsCode.Models;
 
 namespace TehnoclinicCRM_WinFormsCode.Controllers
@@ -160,5 +162,76 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
 
             return tempTable;
         }
+
+
+        // Метод для создания таблицы, исходя из нескольких параметров
+        public DataTable MultiSelect(List<string> parametres, List<string> values)
+        {
+            if (parametres.Count >= 1) //  в случае, если параметров нет, возвращаем таблицу без фильтрации
+            {
+                try
+                {
+                    connection.Open();
+
+                    List<char> symbols = new List<char>() { '-', '!', ',', '.', '?', '\'', '/', '/', '(', ')', '*', '%', '+', '=', '&', '^', ':', ';', '#', '№', '@', '"', '`', '~', '<', '>', '|', '[', ']', '{', '}' };
+
+                    for (int i = 0; i < symbols.Count; i++)
+                    {
+                        if (values[0].Contains(symbols[i].ToString()))
+                        {
+                            values[0] = values[0].Replace(symbols[i], '_');
+                        }
+                    }
+
+                    // Создание фильтра
+                    string query = "WHERE ";
+                    query += $" {parametres[0]} LIKE {values[0]}";
+
+                    for (int i = 1; i < parametres.Count; i++)
+                    {
+                        for (int j = 0; j < symbols.Count; j++)
+                        {
+                            if (values[i].Contains(symbols[j].ToString()))
+                            {
+                                values[i] = values[i].Replace(symbols[j], '_');
+                            }
+                        }
+
+                        query += $" AND {parametres[i]} LIKE {values[i]}";
+                    }
+
+                    // Создание команды
+                    command = new OleDbCommand("SELECT * FROM (SELECT Заказы.[Номер_заказа], Заказы.[Дата_получения], Клиенты.ФИО AS Клиент, Подразделения.Тип AS Подразделение, Услуги.Название_услуги AS Услуга, Услуги.Цена AS Предварительная_Цена, Специалисты.ФИО AS Специалист, Заказы.Дата_начала_выполнения, Заказы.Дата_окончания_выполнения, Заказы.Итоговая_сумма, Статусы_выполнения.Статус " +
+                    "FROM Подразделения INNER JOIN(Статусы_выполнения INNER JOIN(Услуги INNER JOIN(Специалисты INNER JOIN(Клиенты INNER JOIN Заказы ON Клиенты.Id = Заказы.Клиент) ON Специалисты.Id = Заказы.Специалист) ON Услуги.Id = Заказы.Услуга) ON(Статусы_выполнения.Код = Заказы.Статус_выполнения) AND(Статусы_выполнения.Код = Заказы.Статус_выполнения)) ON Подразделения.Код = Услуги.Подразделение) " + query, connection);
+
+                    for (int i = 0; i < parametres.Count; i++)
+                    {
+                        string tempvalue = $"%{values[i]}%";
+                        command.Parameters.AddWithValue($"{values[i]}", tempvalue);
+                    }
+
+                    // Заполнение адаптера
+                    OleDbDataAdapter tempAdapter = new OleDbDataAdapter(command);
+                    DataTable tempTable = new DataTable();
+
+                    tempAdapter.Fill(tempTable);
+
+                    connection.Close();
+
+                    return tempTable;
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(ex.Message + "  | " + command.CommandText);
+                }
+            }
+            else
+            {
+                UpdateTable();
+            }
+
+            return null;
+        }
     }
 }
+

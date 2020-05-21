@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Windows.Forms;
 using TehnoclinicCRM_WinFormsCode.Controllers;
 using Excel = Microsoft.Office.Interop.Excel;
-using Microsoft.Office.Interop.Excel;
 
 namespace TehnoclinicCRM_WinFormsCode
 {
@@ -19,18 +19,20 @@ namespace TehnoclinicCRM_WinFormsCode
 
         private void Exit_Click(object sender, EventArgs e)
         {
-            Close();                                   // Выход из формы
+            System.Windows.Forms.Application.Exit();                                   // Выход из приложения
         }
 
         private void MenuForm_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
 
         private void UpdateTable()
         {
             ServicesGrid.DataSource = controller.UpdateTable();
             ServicesGrid.Columns[0].Visible = false;
+            ServicesGrid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            ServicesGrid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         private void SearchText_TextChanged(object sender, EventArgs e)

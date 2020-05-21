@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using TehnoclinicCRM_WinFormsCode.Models;
 
 namespace TehnoclinicCRM_WinFormsCode.Controllers
 {
-    class ParserToModel
+    class ParserToModel     // Класс-хелпер для преобразования строк таблицы в экземпляры моделей
     {
+        // Получить клиента из строки
         public Client GetClient(DataRow row)
         {
             return new Client()
@@ -21,6 +17,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             };
         }
 
+        // Получить специалиста из строки
         public Specialist GetSpecialist(DataRow row)
         {
             return new Specialist()
@@ -32,6 +29,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             };
         }
 
+        // Получить услугу из строки
         public Service GetService(DataRow row)
         {
             return new Service()
@@ -43,6 +41,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             };
         }
 
+        // Получить подразделение из строки
         public Subdivision GetSubdivision(DataRow row)
         {
             return new Subdivision()

@@ -29,17 +29,17 @@ namespace TehnoclinicCRM_WinFormsCode
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка");
-            }            
+            }
         }
 
         private void Exit_Click(object sender, EventArgs e)
         {
-            Close();                                   // Выход из формы
+            System.Windows.Forms.Application.Exit();
         }
 
         private void MenuForm_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
 
         private void Add_Click(object sender, EventArgs e)
@@ -54,7 +54,7 @@ namespace TehnoclinicCRM_WinFormsCode
             {
                 MessageBox.Show(ex.Message, "Ошибка");
                 throw;
-            }           
+            }
         }
 
         private void Get_Click(object sender, EventArgs e)
@@ -131,7 +131,7 @@ namespace TehnoclinicCRM_WinFormsCode
             new AddOrderForm().Show();
         }
 
- 
+
 
 
         private void специалистыToolStripMenuItem_Click(object sender, EventArgs e)

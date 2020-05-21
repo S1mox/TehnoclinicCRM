@@ -1,5 +1,7 @@
-﻿using System.Data.OleDb;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using TehnoclinicCRM_WinFormsCode.Models;
 
 namespace TehnoclinicCRM_WinFormsCode.Controllers
@@ -81,7 +83,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             connection.Open();
 
             command = new OleDbCommand($"UPDATE Специалисты SET ФИО = @ФИО, Должность = @Должность, Телефон = @Телефон WHERE Id = @Id", connection);
-           
+
             command.Parameters.AddWithValue("ФИО", specialist.FIO);
             command.Parameters.AddWithValue("Должность", specialist.Position);
             command.Parameters.AddWithValue("Телефон", specialist.PhoneNumber);
@@ -124,11 +126,80 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             OleDbDataAdapter tempAdapter = new OleDbDataAdapter(command);
             DataTable tempTable = new DataTable();
 
-            tempAdapter.Fill(tempTable);          
+            tempAdapter.Fill(tempTable);
 
             connection.Close();
 
             return tempTable;
+        }
+
+        // Метод для создания таблицы, исходя из нескольких параметров
+        public DataTable MultiSelect(List<string> parametres, List<string> values)
+        {
+            if (parametres.Count >= 1) //  в случае, если параметров нет, возвращаем таблицу без фильтрации
+            {
+                try
+                {
+                    connection.Open();
+
+                    List<char> symbols = new List<char>() { '-', '!', ',', '.', '?', '\'', '/', '/', '(', ')', '*', '%', '+', '=', '&', '^', ':', ';', '#', '№', '@', '"', '`', '~', '<', '>', '|', '[', ']', '{', '}' };
+
+                    for (int i = 0; i < symbols.Count; i++)
+                    {
+                        if (values[0].Contains(symbols[i].ToString()))
+                        {
+                            values[0] = values[0].Replace(symbols[i], '_');
+                        }
+                    }
+
+                    // Создание фильтра
+                    string query = " WHERE ";
+                    query += $" {parametres[0]} LIKE {values[0]}";
+
+                    for (int i = 1; i < parametres.Count; i++)
+                    {
+
+                        for (int j = 0; j < symbols.Count; j++)
+                        {
+                            if (values[i].Contains(symbols[j].ToString()))
+                            {
+                                values[i] = values[i].Replace(symbols[j], '_');
+                            }
+                        }
+
+                        query += $" AND {parametres[i]} LIKE {values[i]}";
+                    }
+
+                    // Создание команды
+                    command = new OleDbCommand("SELECT * FROM Специалисты" + query, connection);
+
+                    for (int i = 0; i < parametres.Count; i++)
+                    {
+                        string tempvalue = $"%{values[i]}%";
+                        command.Parameters.AddWithValue($"{values[i]}", tempvalue);
+                    }
+
+                    // Заполнение адаптера
+                    OleDbDataAdapter tempAdapter = new OleDbDataAdapter(command);
+                    DataTable tempTable = new DataTable();
+
+                    tempAdapter.Fill(tempTable);
+
+                    connection.Close();
+
+                    return tempTable;
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(ex.Message + "  | " + command.CommandText);
+                }
+            }
+            else
+            {
+                return UpdateTable();
+            }
+
+            return null;
         }
     }
 }

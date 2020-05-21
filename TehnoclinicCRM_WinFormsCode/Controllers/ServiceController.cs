@@ -87,6 +87,7 @@ namespace TehnoclinicCRM_WinFormsCode.Controllers
             return tempTable;
         }
 
+        // Выборка услуг только по поздраделению
         public DataTable SelectServices(string subdivision)
         {
             connection.Open();

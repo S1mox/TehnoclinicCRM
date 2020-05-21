@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TehnoclinicCRM_WinFormsCode.Models
+﻿namespace TehnoclinicCRM_WinFormsCode.Models
 {
     class Order
     {

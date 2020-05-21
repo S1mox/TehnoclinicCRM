@@ -13,7 +13,7 @@ namespace TehnoclinicCRM_WinFormsCode
         SpecialistsController SpecialistsController = new SpecialistsController();      // Контроллер для обработки специалистов
         ServiceController ServicesController = new ServiceController();                 // Контроллер для обработки услуг
         SubdivisionsController SubdivisionsController = new SubdivisionsController();   // Контроллер для обработки типов подразделений
-            
+
         ParserToModel parser = new ParserToModel();         // Парсер из строк таблицы в целые объекты (клиенты, специалисты, услуги, подразделения)
 
         Client CurrentClient = new Client();                // Текущий выбранный клиент
@@ -45,7 +45,7 @@ namespace TehnoclinicCRM_WinFormsCode
         }
 
         // Добавляет в комбобокс с клиентами всех клиентов
-        private void UpdateClients()    
+        private void UpdateClients()
         {
             DataTable temp = ClientsController.UpdateTable();
 
@@ -56,7 +56,7 @@ namespace TehnoclinicCRM_WinFormsCode
         }
 
         // Добавляет в комбобокс с специалистами всех специалистов
-        private void UpdateSpecialists() 
+        private void UpdateSpecialists()
         {
             DataTable temp = SpecialistsController.UpdateTable();
 
@@ -69,7 +69,7 @@ namespace TehnoclinicCRM_WinFormsCode
 
         // Добавляет в комбобокс с подразделениями всех подразделений и в связке 
         //  выбранными подразделениями выбирает услуги
-        public void UpdateSubdivisions(object sender, EventArgs e) 
+        public void UpdateSubdivisions(object sender, EventArgs e)
         {
             SubdivisionsBox.Items.Clear();
 

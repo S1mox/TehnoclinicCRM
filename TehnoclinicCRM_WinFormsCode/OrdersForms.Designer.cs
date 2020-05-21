@@ -37,10 +37,17 @@
             this.SearchL = new System.Windows.Forms.Label();
             this.Reset = new System.Windows.Forms.Button();
             this.SearchBox = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.StatusBox = new System.Windows.Forms.GroupBox();
-            this.IsClosed = new System.Windows.Forms.CheckBox();
-            this.IsRepairs = new System.Windows.Forms.CheckBox();
-            this.IsFramed = new System.Windows.Forms.CheckBox();
+            this.IsClosed = new System.Windows.Forms.RadioButton();
+            this.IsRepairs = new System.Windows.Forms.RadioButton();
+            this.IsFramed = new System.Windows.Forms.RadioButton();
+            this.DateEndSearch = new System.Windows.Forms.TextBox();
+            this.SumSearchL = new System.Windows.Forms.Label();
+            this.ResetMulty = new System.Windows.Forms.Button();
+            this.SumSearch = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.SingleBox = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.вГлавноеМенюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +60,9 @@
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.OrdersGrid)).BeginInit();
             this.SearchBox.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.StatusBox.SuspendLayout();
+            this.SingleBox.SuspendLayout();
             this.panel1.SuspendLayout();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -67,14 +76,14 @@
             this.OrdersGrid.BackgroundColor = System.Drawing.Color.Snow;
             this.OrdersGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.OrdersGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OrdersGrid.Location = new System.Drawing.Point(0, 30);
+            this.OrdersGrid.Location = new System.Drawing.Point(0, 24);
             this.OrdersGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OrdersGrid.MultiSelect = false;
             this.OrdersGrid.Name = "OrdersGrid";
             this.OrdersGrid.ReadOnly = true;
             this.OrdersGrid.RowHeadersWidth = 51;
             this.OrdersGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OrdersGrid.Size = new System.Drawing.Size(1112, 573);
+            this.OrdersGrid.Size = new System.Drawing.Size(1150, 372);
             this.OrdersGrid.TabIndex = 1;
             // 
             // Delete
@@ -82,9 +91,9 @@
             this.Delete.BackColor = System.Drawing.Color.Snow;
             this.Delete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Delete.ForeColor = System.Drawing.Color.Black;
-            this.Delete.Location = new System.Drawing.Point(27, 43);
+            this.Delete.Location = new System.Drawing.Point(12, 29);
             this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(214, 61);
+            this.Delete.Size = new System.Drawing.Size(245, 150);
             this.Delete.TabIndex = 14;
             this.Delete.Text = "Удалить запись";
             this.Delete.UseVisualStyleBackColor = false;
@@ -93,9 +102,9 @@
             // SearchCriteriaL
             // 
             this.SearchCriteriaL.AutoSize = true;
-            this.SearchCriteriaL.Location = new System.Drawing.Point(19, 24);
+            this.SearchCriteriaL.Location = new System.Drawing.Point(6, 31);
             this.SearchCriteriaL.Name = "SearchCriteriaL";
-            this.SearchCriteriaL.Size = new System.Drawing.Size(118, 16);
+            this.SearchCriteriaL.Size = new System.Drawing.Size(89, 12);
             this.SearchCriteriaL.TabIndex = 7;
             this.SearchCriteriaL.Text = "Критерий поиска";
             // 
@@ -113,25 +122,25 @@
             "Дата начала выполнения",
             "Дата окончания выполнения",
             "Итоговая сумма"});
-            this.CriteriesBox.Location = new System.Drawing.Point(164, 21);
+            this.CriteriesBox.Location = new System.Drawing.Point(151, 28);
             this.CriteriesBox.Name = "CriteriesBox";
-            this.CriteriesBox.Size = new System.Drawing.Size(161, 23);
+            this.CriteriesBox.Size = new System.Drawing.Size(161, 20);
             this.CriteriesBox.TabIndex = 8;
             // 
             // SearchText
             // 
-            this.SearchText.Location = new System.Drawing.Point(164, 48);
+            this.SearchText.Location = new System.Drawing.Point(151, 55);
             this.SearchText.Name = "SearchText";
-            this.SearchText.Size = new System.Drawing.Size(161, 23);
+            this.SearchText.Size = new System.Drawing.Size(161, 20);
             this.SearchText.TabIndex = 9;
             this.SearchText.TextChanged += new System.EventHandler(this.SearchText_TextChanged);
             // 
             // SearchL
             // 
             this.SearchL.AutoSize = true;
-            this.SearchL.Location = new System.Drawing.Point(19, 51);
+            this.SearchL.Location = new System.Drawing.Point(6, 58);
             this.SearchL.Name = "SearchL";
-            this.SearchL.Size = new System.Drawing.Size(92, 16);
+            this.SearchL.Size = new System.Drawing.Size(71, 12);
             this.SearchL.TabIndex = 10;
             this.SearchL.Text = "Строка ввода";
             // 
@@ -140,7 +149,7 @@
             this.Reset.BackColor = System.Drawing.Color.Snow;
             this.Reset.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Reset.ForeColor = System.Drawing.Color.Black;
-            this.Reset.Location = new System.Drawing.Point(21, 84);
+            this.Reset.Location = new System.Drawing.Point(8, 91);
             this.Reset.Name = "Reset";
             this.Reset.Size = new System.Drawing.Size(304, 34);
             this.Reset.TabIndex = 14;
@@ -150,30 +159,42 @@
             // 
             // SearchBox
             // 
-            this.SearchBox.Controls.Add(this.StatusBox);
-            this.SearchBox.Controls.Add(this.Reset);
-            this.SearchBox.Controls.Add(this.SearchL);
-            this.SearchBox.Controls.Add(this.SearchText);
-            this.SearchBox.Controls.Add(this.CriteriesBox);
-            this.SearchBox.Controls.Add(this.SearchCriteriaL);
+            this.SearchBox.Controls.Add(this.groupBox1);
+            this.SearchBox.Controls.Add(this.SingleBox);
             this.SearchBox.ForeColor = System.Drawing.Color.Snow;
             this.SearchBox.Location = new System.Drawing.Point(281, 7);
             this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Size = new System.Drawing.Size(819, 130);
+            this.SearchBox.Size = new System.Drawing.Size(856, 188);
             this.SearchBox.TabIndex = 15;
             this.SearchBox.TabStop = false;
             this.SearchBox.Text = "Поиск";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.StatusBox);
+            this.groupBox1.Controls.Add(this.DateEndSearch);
+            this.groupBox1.Controls.Add(this.SumSearchL);
+            this.groupBox1.Controls.Add(this.ResetMulty);
+            this.groupBox1.Controls.Add(this.SumSearch);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.ForeColor = System.Drawing.Color.Snow;
+            this.groupBox1.Location = new System.Drawing.Point(338, 21);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(503, 151);
+            this.groupBox1.TabIndex = 23;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Множественная фильтрация";
+            // 
             // StatusBox
             // 
-            this.StatusBox.BackColor = System.Drawing.Color.Snow;
+            this.StatusBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(30)))), ((int)(((byte)(29)))));
             this.StatusBox.Controls.Add(this.IsClosed);
             this.StatusBox.Controls.Add(this.IsRepairs);
             this.StatusBox.Controls.Add(this.IsFramed);
-            this.StatusBox.ForeColor = System.Drawing.Color.Black;
-            this.StatusBox.Location = new System.Drawing.Point(661, 19);
+            this.StatusBox.ForeColor = System.Drawing.Color.Snow;
+            this.StatusBox.Location = new System.Drawing.Point(12, 19);
             this.StatusBox.Name = "StatusBox";
-            this.StatusBox.Size = new System.Drawing.Size(142, 99);
+            this.StatusBox.Size = new System.Drawing.Size(170, 107);
             this.StatusBox.TabIndex = 15;
             this.StatusBox.TabStop = false;
             this.StatusBox.Text = "Фильтр по статусу заказа";
@@ -181,11 +202,11 @@
             // IsClosed
             // 
             this.IsClosed.AutoSize = true;
-            this.IsClosed.ForeColor = System.Drawing.Color.Black;
-            this.IsClosed.Location = new System.Drawing.Point(6, 65);
+            this.IsClosed.Location = new System.Drawing.Point(15, 75);
             this.IsClosed.Name = "IsClosed";
-            this.IsClosed.Size = new System.Drawing.Size(78, 20);
-            this.IsClosed.TabIndex = 2;
+            this.IsClosed.Size = new System.Drawing.Size(60, 16);
+            this.IsClosed.TabIndex = 5;
+            this.IsClosed.TabStop = true;
             this.IsClosed.Text = "Закрыт";
             this.IsClosed.UseVisualStyleBackColor = true;
             this.IsClosed.CheckedChanged += new System.EventHandler(this.IsFramed_CheckedChanged);
@@ -193,11 +214,11 @@
             // IsRepairs
             // 
             this.IsRepairs.AutoSize = true;
-            this.IsRepairs.ForeColor = System.Drawing.Color.Black;
-            this.IsRepairs.Location = new System.Drawing.Point(6, 41);
+            this.IsRepairs.Location = new System.Drawing.Point(15, 49);
             this.IsRepairs.Name = "IsRepairs";
-            this.IsRepairs.Size = new System.Drawing.Size(76, 20);
-            this.IsRepairs.TabIndex = 1;
+            this.IsRepairs.Size = new System.Drawing.Size(59, 16);
+            this.IsRepairs.TabIndex = 4;
+            this.IsRepairs.TabStop = true;
             this.IsRepairs.Text = "Ремонт";
             this.IsRepairs.UseVisualStyleBackColor = true;
             this.IsRepairs.CheckedChanged += new System.EventHandler(this.IsFramed_CheckedChanged);
@@ -205,23 +226,85 @@
             // IsFramed
             // 
             this.IsFramed.AutoSize = true;
-            this.IsFramed.ForeColor = System.Drawing.Color.Black;
-            this.IsFramed.Location = new System.Drawing.Point(6, 19);
+            this.IsFramed.Location = new System.Drawing.Point(15, 23);
             this.IsFramed.Name = "IsFramed";
-            this.IsFramed.Size = new System.Drawing.Size(96, 20);
-            this.IsFramed.TabIndex = 0;
+            this.IsFramed.Size = new System.Drawing.Size(74, 16);
+            this.IsFramed.TabIndex = 3;
+            this.IsFramed.TabStop = true;
             this.IsFramed.Text = "Оформлен";
             this.IsFramed.UseVisualStyleBackColor = true;
             this.IsFramed.CheckedChanged += new System.EventHandler(this.IsFramed_CheckedChanged);
+            // 
+            // DateEndSearch
+            // 
+            this.DateEndSearch.Location = new System.Drawing.Point(378, 61);
+            this.DateEndSearch.Name = "DateEndSearch";
+            this.DateEndSearch.Size = new System.Drawing.Size(106, 20);
+            this.DateEndSearch.TabIndex = 22;
+            this.DateEndSearch.TextChanged += new System.EventHandler(this.DateEndSearch_TextChanged);
+            // 
+            // SumSearchL
+            // 
+            this.SumSearchL.AutoSize = true;
+            this.SumSearchL.Location = new System.Drawing.Point(220, 29);
+            this.SumSearchL.Name = "SumSearchL";
+            this.SumSearchL.Size = new System.Drawing.Size(85, 12);
+            this.SumSearchL.TabIndex = 17;
+            this.SumSearchL.Text = "Итоговая сумма";
+            // 
+            // ResetMulty
+            // 
+            this.ResetMulty.BackColor = System.Drawing.Color.Snow;
+            this.ResetMulty.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ResetMulty.ForeColor = System.Drawing.Color.Black;
+            this.ResetMulty.Location = new System.Drawing.Point(222, 92);
+            this.ResetMulty.Name = "ResetMulty";
+            this.ResetMulty.Size = new System.Drawing.Size(262, 34);
+            this.ResetMulty.TabIndex = 21;
+            this.ResetMulty.Text = "Сброс множественной фильтрации";
+            this.ResetMulty.UseVisualStyleBackColor = false;
+            this.ResetMulty.Click += new System.EventHandler(this.ResetMulty_Click);
+            // 
+            // SumSearch
+            // 
+            this.SumSearch.Location = new System.Drawing.Point(378, 26);
+            this.SumSearch.Name = "SumSearch";
+            this.SumSearch.Size = new System.Drawing.Size(106, 20);
+            this.SumSearch.TabIndex = 18;
+            this.SumSearch.TextChanged += new System.EventHandler(this.SumSearch_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(220, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(146, 12);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Дата окончания выполнения";
+            // 
+            // SingleBox
+            // 
+            this.SingleBox.Controls.Add(this.SearchCriteriaL);
+            this.SingleBox.Controls.Add(this.CriteriesBox);
+            this.SingleBox.Controls.Add(this.Reset);
+            this.SingleBox.Controls.Add(this.SearchText);
+            this.SingleBox.Controls.Add(this.SearchL);
+            this.SingleBox.ForeColor = System.Drawing.Color.Snow;
+            this.SingleBox.Location = new System.Drawing.Point(6, 22);
+            this.SingleBox.Name = "SingleBox";
+            this.SingleBox.Size = new System.Drawing.Size(326, 150);
+            this.SingleBox.TabIndex = 16;
+            this.SingleBox.TabStop = false;
+            this.SingleBox.Text = "Одиночная фильтрация";
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.SearchBox);
             this.panel1.Controls.Add(this.Delete);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 454);
+            this.panel1.Location = new System.Drawing.Point(0, 396);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1112, 149);
+            this.panel1.Size = new System.Drawing.Size(1150, 207);
             this.panel1.TabIndex = 16;
             // 
             // MenuBar
@@ -237,14 +320,14 @@
             this.выходToolStripMenuItem});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Size = new System.Drawing.Size(1112, 30);
+            this.MenuBar.Size = new System.Drawing.Size(1150, 24);
             this.MenuBar.TabIndex = 17;
             this.MenuBar.Text = "menuStrip1";
             // 
             // вГлавноеМенюToolStripMenuItem
             // 
             this.вГлавноеМенюToolStripMenuItem.Name = "вГлавноеМенюToolStripMenuItem";
-            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.вГлавноеМенюToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
             this.вГлавноеМенюToolStripMenuItem.Text = "В главное меню";
             this.вГлавноеМенюToolStripMenuItem.Click += new System.EventHandler(this.MenuForm_Click);
             // 
@@ -255,59 +338,59 @@
             this.специалистыToolStripMenuItem,
             this.услугиToolStripMenuItem});
             this.справочники0ToolStripMenuItem.Name = "справочники0ToolStripMenuItem";
-            this.справочники0ToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
+            this.справочники0ToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
             this.справочники0ToolStripMenuItem.Text = "Справочники";
             // 
             // клиентыToolStripMenuItem
             // 
             this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
-            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.клиентыToolStripMenuItem.Text = "Клиенты";
             this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
             // 
             // специалистыToolStripMenuItem
             // 
             this.специалистыToolStripMenuItem.Name = "специалистыToolStripMenuItem";
-            this.специалистыToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.специалистыToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.специалистыToolStripMenuItem.Text = "Специалисты";
             this.специалистыToolStripMenuItem.Click += new System.EventHandler(this.специалистыToolStripMenuItem_Click);
             // 
             // услугиToolStripMenuItem
             // 
             this.услугиToolStripMenuItem.Name = "услугиToolStripMenuItem";
-            this.услугиToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.услугиToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.услугиToolStripMenuItem.Text = "Услуги";
             this.услугиToolStripMenuItem.Click += new System.EventHandler(this.услугиToolStripMenuItem_Click);
             // 
             // оформитьЗаказToolStripMenuItem
             // 
             this.оформитьЗаказToolStripMenuItem.Name = "оформитьЗаказToolStripMenuItem";
-            this.оформитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
+            this.оформитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
             this.оформитьЗаказToolStripMenuItem.Text = "Оформить заказ";
             this.оформитьЗаказToolStripMenuItem.Click += new System.EventHandler(this.AddOrder_Click);
             // 
             // отчетВExcelToolStripMenuItem
             // 
             this.отчетВExcelToolStripMenuItem.Name = "отчетВExcelToolStripMenuItem";
-            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.отчетВExcelToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
             this.отчетВExcelToolStripMenuItem.Text = "Отчет в Excel";
             this.отчетВExcelToolStripMenuItem.Click += new System.EventHandler(this.Create_ExcelReport);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(72, 26);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.Exit_Click);
             // 
             // OrdersForms
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(30)))), ((int)(((byte)(29)))));
-            this.ClientSize = new System.Drawing.Size(1112, 603);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(1150, 603);
             this.Controls.Add(this.OrdersGrid);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.MenuBar);
             this.Font = new System.Drawing.Font("Cambria", 8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -317,9 +400,12 @@
             this.Text = "Заказы";
             ((System.ComponentModel.ISupportInitialize)(this.OrdersGrid)).EndInit();
             this.SearchBox.ResumeLayout(false);
-            this.SearchBox.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.StatusBox.ResumeLayout(false);
             this.StatusBox.PerformLayout();
+            this.SingleBox.ResumeLayout(false);
+            this.SingleBox.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
@@ -346,11 +432,18 @@
         private System.Windows.Forms.ToolStripMenuItem отчетВExcelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.GroupBox StatusBox;
-        private System.Windows.Forms.CheckBox IsClosed;
-        private System.Windows.Forms.CheckBox IsRepairs;
-        private System.Windows.Forms.CheckBox IsFramed;
         private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem специалистыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem услугиToolStripMenuItem;
+        private System.Windows.Forms.GroupBox SingleBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox SumSearch;
+        private System.Windows.Forms.Label SumSearchL;
+        private System.Windows.Forms.Button ResetMulty;
+        private System.Windows.Forms.RadioButton IsClosed;
+        private System.Windows.Forms.RadioButton IsRepairs;
+        private System.Windows.Forms.RadioButton IsFramed;
+        private System.Windows.Forms.TextBox DateEndSearch;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

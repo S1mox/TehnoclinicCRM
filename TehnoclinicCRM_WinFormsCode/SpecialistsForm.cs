@@ -39,7 +39,7 @@ namespace TehnoclinicCRM_WinFormsCode
 
         private void Exit_Click(object sender, EventArgs e)
         {
-            Close();                                   // Выход из приложения
+            System.Windows.Forms.Application.Exit();                                   // Выход из приложения
         }
 
         private void Delete_Click(object sender, EventArgs e)
@@ -59,6 +59,8 @@ namespace TehnoclinicCRM_WinFormsCode
             SpecialistGrid.DataSource = null;
             SpecialistGrid.DataSource = controller.UpdateTable();
             SpecialistGrid.Columns["Id"].Visible = false;
+            SpecialistGrid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            SpecialistGrid.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
         }
 
         private void Update_Click(object sender, EventArgs e)
@@ -80,7 +82,7 @@ namespace TehnoclinicCRM_WinFormsCode
 
         private void MenuForm_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
 
         private void Reset_Click(object sender, EventArgs e)        // Сброс поиска
@@ -149,7 +151,7 @@ namespace TehnoclinicCRM_WinFormsCode
             Excel.Application ExcelApp = new Excel.Application();
             ExcelApp.Visible = false;
 
-            Workbook workbook =  ExcelApp.Workbooks.Add();
+            Workbook workbook = ExcelApp.Workbooks.Add();
 
             for (int i = 0, n = 1; i < SpecialistGrid.ColumnCount; i++, n++)
             {
@@ -160,7 +162,7 @@ namespace TehnoclinicCRM_WinFormsCode
             {
                 for (int j = 0; j < SpecialistGrid.ColumnCount; j++)
                 {
-                    ExcelApp.Cells[i+2, j + 1] = (SpecialistGrid[j, i].Value.ToString()).ToString();
+                    ExcelApp.Cells[i + 2, j + 1] = (SpecialistGrid[j, i].Value.ToString()).ToString();
                 }
             }
 

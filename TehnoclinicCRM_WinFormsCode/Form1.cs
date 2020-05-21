@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace TehnoclinicCRM_WinFormsCode
 {
@@ -44,6 +44,11 @@ namespace TehnoclinicCRM_WinFormsCode
         private void CreateOrder_Click(object sender, EventArgs e)
         {
             new AddOrderForm().Show();                              // Показать форму формирования заказа
+        }
+
+        private void Report_Click(object sender, EventArgs e)
+        {
+            new ReportForm().Show();
         }
     }
 }
